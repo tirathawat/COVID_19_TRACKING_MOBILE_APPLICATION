@@ -27,9 +27,17 @@ class Body extends StatelessWidget {
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(36),
                     color: kPrimaryColor,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
+              ),
+              Image.asset(
+                "assets/images/protected.png",
+                height: getProportionateScreenHeight(265),
+                width: getProportionateScreenWidth(235),
+              ),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.1,
               ),
               DefaultButton(
                 text: "Sign In",
@@ -40,7 +48,9 @@ class Body extends StatelessWidget {
                           builder: (BuildContext context) => SignInScreen()));
                 },
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.05,),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.03,
+              ),
               DefaultButton(
                 text: "Sign Up",
                 press: () {

@@ -48,6 +48,13 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   Container(
+                    color: Colors.grey,
+                    height: SizeConfig.screenHeight * 0.005,
+                  ),
+                  SizedBox(
+                    height: SizeConfig.screenHeight * 0.01,
+                  ),
+                  Container(
                     alignment: Alignment.topLeft,
                     child: Text(
                       "Thailand covid-19 today\nlasted update : ${_dataFromWebAPI.updateDate}",
@@ -58,6 +65,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   ),
+                  
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.05,
                   ),
