@@ -14,22 +14,24 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SizedBox(
-        child: Column(
-          children: [
-            Text(
-              "Welcome Back",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: getProportionateScreenWidth(28),
-                fontWeight: FontWeight.bold,
+      child: SingleChildScrollView(
+        child: SizedBox(
+          child: Column(
+            children: [
+              Text(
+                "Welcome Back",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: getProportionateScreenWidth(28),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: SizeConfig.screenHeight * 0.1,),
-            SignForm(),
-            
-
-          ],
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.1,
+              ),
+              SignForm(),
+            ],
+          ),
         ),
       ),
     );

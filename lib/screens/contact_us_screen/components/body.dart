@@ -12,46 +12,56 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  get errors => null;
-
+  final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: getProportionateScreenHeight(10),
-                  bottom: getProportionateScreenHeight(10),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "Send Us A Message",
-                  style: TextStyle(
-                    color: kPrimaryColor,
-                    fontSize: getProportionateScreenWidth(32),
-                    fontWeight: FontWeight.bold,
+      child: Form(
+        key: _formKey,
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(
+                    top: getProportionateScreenHeight(10),
+                    bottom: getProportionateScreenHeight(10),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Send Us A Message",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: getProportionateScreenWidth(32),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: SizeConfig.screenHeight * 0.03),
-              buildNameFormField(),
-              SizedBox(height: SizeConfig.screenHeight * 0.03),
-              buildEmailFormField(),
-              SizedBox(height: SizeConfig.screenHeight * 0.03),
-              buildPhoneFormField(),
-              SizedBox(height: SizeConfig.screenHeight * 0.03),
-              buildMessageFormField(),
-              SizedBox(height: SizeConfig.screenHeight * 0.03),
-              DefaultButton(
-                text: "Send Message",
-                press: () {},
-              ),
-            ],
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                buildNameFormField(),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                buildEmailFormField(),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                buildPhoneFormField(),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                buildMessageFormField(),
+                SizedBox(height: SizeConfig.screenHeight * 0.03),
+                DefaultButton(
+                    text: "Send Message",
+                    press: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       ),
@@ -59,7 +69,14 @@ class _BodyState extends State<Body> {
   }
 
   TextFormField buildMessageFormField() => TextFormField(
-        maxLines: 5,
+        controller: messageController,
+        validator: (value) {
+          if (value.isEmpty)
+            return kMessageNullError;
+          else
+            return null;
+        },
+        maxLines: 3,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -69,6 +86,13 @@ class _BodyState extends State<Body> {
       );
 
   TextFormField buildPhoneFormField() => TextFormField(
+        controller: phoneController,
+        validator: (value) {
+          if (value.isEmpty)
+            return kPhoneNumberNullError;
+          else
+            return null;
+        },
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -79,6 +103,13 @@ class _BodyState extends State<Body> {
 
   TextFormField buildNameFormField() {
     return TextFormField(
+      controller: nameController,
+      validator: (value) {
+        if (value.isEmpty)
+          return kNameNullError;
+        else
+          return "";
+      },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -90,32 +121,14 @@ class _BodyState extends State<Body> {
 
   TextFormField buildEmailFormField() {
     return TextFormField(
-      //onSaved: (newValue) => email = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.remove(kEmailNullError);
-          });
-        } else if (emailValidatorRegExp.hasMatch(value) &&
-            errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.remove(kInvalidEmailError);
-          });
-        }
-        return null;
-      },
+      controller: emailController,
       validator: (value) {
-        if (value.isEmpty && !errors.contains(kEmailNullError)) {
-          setState(() {
-            errors.add(kEmailNullError);
-          });
-        } else if (!emailValidatorRegExp.hasMatch(value) &&
-            !errors.contains(kInvalidEmailError)) {
-          setState(() {
-            errors.add(kInvalidEmailError);
-          });
-        }
-        return null;
+        if (value.isEmpty)
+          return kEmailNullError;
+        else if (!emailValidatorRegExp.hasMatch(value))
+          return kInvalidEmailError;
+        else
+          return "";
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(

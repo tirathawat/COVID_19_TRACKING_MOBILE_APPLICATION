@@ -13,6 +13,7 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   //final AuthService authService = AuthService();
+
   final _formKey = GlobalKey<FormState>();
   String email;
   String password;
@@ -68,19 +69,22 @@ class _SignFormState extends State<SignForm> {
             errors.remove(kShortPassError);
           });
         }
-        return null;
+        else return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kPassNullError)) {
           setState(() {
             errors.add(kPassNullError);
           });
+          return "";
         } else if (value.length < 8 && !errors.contains(kShortPassError)) {
           setState(() {
             errors.add(kShortPassError);
           });
+          return "";
         }
-        return null;
+        else if (errors.isEmpty) return null;
+        else return "";
       },
       onSaved: (newValue) => password = newValue,
       obscureText: true,
@@ -106,20 +110,23 @@ class _SignFormState extends State<SignForm> {
             errors.remove(kInvalidEmailError);
           });
         }
-        return null;
+        else return null;
       },
       validator: (value) {
         if (value.isEmpty && !errors.contains(kEmailNullError)) {
           setState(() {
             errors.add(kEmailNullError);
           });
+          return "";
         } else if (!emailValidatorRegExp.hasMatch(value) &&
             !errors.contains(kInvalidEmailError)) {
           setState(() {
             errors.add(kInvalidEmailError);
           });
+          return "";
         }
-        return null;
+        else if (errors.isEmpty) return null;
+        else return "";
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
