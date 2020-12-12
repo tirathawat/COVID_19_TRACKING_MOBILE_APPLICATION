@@ -1,6 +1,9 @@
 import 'package:covid19_app/components/default_button.dart';
+import 'package:covid19_app/screens/home_screen/home_screen.dart';
 import 'package:covid19_app/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 
 import '../../../constants.dart';
 
@@ -57,7 +60,34 @@ class _BodyState extends State<Body> {
                     press: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Are you sure?"),
+                                content: Text(
+                                    "This will send a message to the developer."),
+                                actions: [
+                                  FlatButton(
+                                    onPressed: () {
+                                      sendEmail(
+                                          name: nameController.text,
+                                          email: emailController.text,
+                                          phone: phoneController.text,
+                                          message_: messageController.text);
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Confirm"),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text("Cancel"),
+                                  ),
+                                ],
+                              );
+                            });
                       }
                     }),
               ],
@@ -108,7 +138,7 @@ class _BodyState extends State<Body> {
         if (value.isEmpty)
           return kNameNullError;
         else
-          return "";
+          return null;
       },
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
@@ -128,7 +158,7 @@ class _BodyState extends State<Body> {
         else if (!emailValidatorRegExp.hasMatch(value))
           return kInvalidEmailError;
         else
-          return "";
+          return null;
       },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
@@ -137,5 +167,34 @@ class _BodyState extends State<Body> {
         hintText: "Enter your email",
       ),
     );
+  }
+}
+
+Future<void> sendEmail(
+    {String name, String email, String phone, String message_}) async {
+  String username = 'Covid19.Tracker.test@gmail.com';
+  String password = "Covid19.Tracker.test123";
+
+  final smtpServer = gmail(username, password);
+
+  final message = Message()
+    ..from = Address(username)
+    ..recipients.add('tirathawat@gmail.com')
+    ..subject = 'Contact us from Covid19_Tracker :: ${DateTime.now()}'
+    ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+    ..html = "<h1>Message from Covid19 Tracker application</h1>\n" +
+        "<p>Sender name : ${name}</p>\n" +
+        "<p>Email : ${email}</p>\n" +
+        "<p>Phone : ${phone}</p>\n" +
+        "<p>Message : ${message_}</p>";
+
+  try {
+    final sendReport = await send(message, smtpServer);
+    print('Message sent: ' + sendReport.toString());
+  } on MailerException catch (e) {
+    print('Message not sent.');
+    for (var p in e.problems) {
+      print('Problem: ${p.code}: ${p.msg}');
+    }
   }
 }
