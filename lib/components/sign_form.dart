@@ -1,3 +1,4 @@
+import 'package:covid19_app/screens/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -39,15 +40,13 @@ class _SignFormState extends State<SignForm> {
             ),
             DefaultButton(
               text: "Continue",
-              press: () async {
+              press: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  /*dynamic result = await authService.signInAnonymous();
-                  if (result == null) print("sign in error");
-                  else {
-                    print("sign in success");
-                    
-                  }*/
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomeScreen()));
                 }
               },
             ),
