@@ -1,3 +1,4 @@
+import 'package:covid19_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,12 +24,12 @@ class StatBox extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            style: TextStyle(fontSize: getProportionateScreenWidth(20), color: Colors.white),
           ),
           Expanded(
             child: Text(
               "${NumberFormat("#,###").format(total) ?? "..."}",
-              style: TextStyle(fontSize: 48, color: Colors.white),
+              style: TextStyle(fontSize: getProportionateScreenWidth(32), color: Colors.white),
               textAlign: TextAlign.right,
             ),
           )
