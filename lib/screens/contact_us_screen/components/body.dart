@@ -180,7 +180,7 @@ Future<void> sendEmail(
 
   final message = Message()
     ..from = Address(username)
-    ..recipients.add('pod@techbase.camp')
+    ..recipients.add('pongpith@cybertoryth.com')
     ..subject = 'Contact us from Covid19_Tracker :: ${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
     ..html = "<h1>Message from Covid19 Tracker application</h1>\n" +
