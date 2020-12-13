@@ -1,6 +1,5 @@
 import 'package:covid19_app/components/form_error.dart';
 import 'package:covid19_app/screens/home_screen/home_screen.dart';
-import 'package:covid19_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -77,7 +76,6 @@ class _SignFormState extends State<SignForm> {
                         setState(() {
                           errors.add(kERROR_USER_NOT_FOUND);
                         });
-
                         break;
                       case "ERROR_USER_DISABLED":
                         setState(() {

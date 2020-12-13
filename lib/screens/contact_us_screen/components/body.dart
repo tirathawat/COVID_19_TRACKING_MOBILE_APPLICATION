@@ -1,5 +1,4 @@
 import 'package:covid19_app/components/default_button.dart';
-import 'package:covid19_app/screens/home_screen/home_screen.dart';
 import 'package:covid19_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -187,7 +186,6 @@ Future<void> sendEmail(
         "<p>Email : ${email}</p>\n" +
         "<p>Phone : ${phone}</p>\n" +
         "<p>Message : ${message_}</p>";
-
   try {
     final sendReport = await send(message, smtpServer);
     print('Message sent: ' + sendReport.toString());
