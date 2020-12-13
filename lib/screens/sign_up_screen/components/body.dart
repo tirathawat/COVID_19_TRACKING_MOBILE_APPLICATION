@@ -1,4 +1,4 @@
-import 'package:covid19_app/components/sign_form.dart';
+import 'package:covid19_app/screens/sign_up_screen/components/sign_form.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';

@@ -1,6 +1,8 @@
 import 'package:covid19_app/screens/contact_us_screen/contact_us_screen.dart';
 import 'package:covid19_app/screens/start_screen/start_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../size_config.dart';
@@ -13,6 +15,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,11 +80,9 @@ class _BodyState extends State<Body> {
                 size: getProportionateScreenWidth(30),
               ),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => StartScreen(),
-                    ));
+                googleSignIn.signOut();
+                auth.signOut();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => StartScreen()));
               },
               title: Text(
                 "Logout",

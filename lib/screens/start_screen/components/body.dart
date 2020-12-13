@@ -2,6 +2,7 @@ import 'package:covid19_app/components/default_button.dart';
 import 'package:covid19_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:covid19_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
