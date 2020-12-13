@@ -61,33 +61,34 @@ class _SignFormState extends State<SignForm> {
                     return true;
                   }).catchError((e) {
                     errors.clear();
+                    print(e.code);
                     switch (e.code) {
-                      case "ERROR_WRONG_PASSWORD":
+                      case "wrong-password":
                         setState(() {
                           errors.add(kERROR_WRONG_PASSWORD);
                         });
                         break;
-                      case "ERROR_INVALID_EMAIL":
+                      case "invalid-email":
                         setState(() {
                           errors.add(kERROR_INVALID_EMAIL);
                         });
                         break;
-                      case "ERROR_USER_NOT_FOUND":
+                      case "user-not-found":
                         setState(() {
                           errors.add(kERROR_USER_NOT_FOUND);
                         });
                         break;
-                      case "ERROR_USER_DISABLED":
+                      case "user-disabled":
                         setState(() {
                           errors.add(kERROR_USER_DISABLED);
                         });
                         break;
-                      case "ERROR_TOO_MANY_REQUESTS":
+                      case "too-many-requests":
                         setState(() {
                           errors.add(kERROR_TOO_MANY_REQUESTS);
                         });
                         break;
-                      case "ERROR_OPERATION_NOT_ALLOWED":
+                      case "operation-not-allowed":
                         setState(() {
                           errors.add(kERROR_OPERATION_NOT_ALLOWED);
                         });
@@ -125,9 +126,11 @@ class _SignFormState extends State<SignForm> {
                 color: Color(0xff4185f4),
                 onPressed: () async {
                   await signInWithGoogle().whenComplete(() {
-                    Navigator.pop(context);
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    if (googleUser != null) {
+                      Navigator.pop(context);
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => HomeScreen()));
+                    }
                   });
                 },
                 child: Row(

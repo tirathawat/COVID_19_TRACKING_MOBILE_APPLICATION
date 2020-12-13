@@ -1,4 +1,5 @@
 import 'package:covid19_app/components/default_button.dart';
+import 'package:covid19_app/screens/home_screen/home_screen.dart';
 import 'package:covid19_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -74,7 +75,8 @@ class _BodyState extends State<Body> {
                                           email: emailController.text,
                                           phone: phoneController.text,
                                           message_: messageController.text);
-                                      Navigator.pop(context);
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(builder: (context) => HomeScreen()));
                                     },
                                     child: Text("Confirm"),
                                   ),
@@ -178,7 +180,7 @@ Future<void> sendEmail(
 
   final message = Message()
     ..from = Address(username)
-    ..recipients.add('tirathawat@gmail.com')
+    ..recipients.add('pod@techbase.camp')
     ..subject = 'Contact us from Covid19_Tracker :: ${DateTime.now()}'
     ..text = 'This is the plain text.\nThis is line 2 of the text part.'
     ..html = "<h1>Message from Covid19 Tracker application</h1>\n" +
